@@ -221,6 +221,9 @@ extension TodoListViewController: TodoListCellDelegate {
     }
     
     func update(id: String, isCheck: Bool) {
+        // TextFieldからフォーカスを外して空欄の場合は行ごと削除
+        self.view.endEditing(true)
+        
         do {
             try delegate.update(id: id, isCheck: isCheck)
         } catch {
