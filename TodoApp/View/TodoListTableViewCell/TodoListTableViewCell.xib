@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="todoListCell" id="KGk-i7-Jjw" customClass="TodoListTableViewCell" customModule="TodoApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIq-GW-p3v" userLabel="square">
+                        <rect key="frame" x="44" y="10" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Mzz-FU-WZF"/>
+                            <constraint firstAttribute="width" secondItem="AIq-GW-p3v" secondAttribute="height" multiplier="1:1" id="hdY-4D-sxq"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="square" catalog="system"/>
+                        <connections>
+                            <action selector="check:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wv9-0n-pGR"/>
+                        </connections>
+                    </button>
+                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxP-QB-qlR">
+                        <rect key="frame" x="94" y="5" width="182" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="gal-rz-Os9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p2j-NX-Grp" userLabel="check">
+                        <rect key="frame" x="44" y="10" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="p2j-NX-Grp" secondAttribute="height" multiplier="1:1" id="JQn-LG-VEa"/>
+                            <constraint firstAttribute="height" constant="30" id="qLe-sy-5ZI"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="checkmark.square" catalog="system"/>
+                        <connections>
+                            <action selector="uncheck:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9Hi-EB-AuI"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="fxP-QB-qlR" firstAttribute="leading" secondItem="AIq-GW-p3v" secondAttribute="trailing" constant="20" id="5pa-ug-EuP"/>
+                    <constraint firstItem="p2j-NX-Grp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Aqd-vX-Le9"/>
+                    <constraint firstAttribute="trailing" secondItem="fxP-QB-qlR" secondAttribute="trailing" constant="44" id="HCB-aI-LJa"/>
+                    <constraint firstItem="fxP-QB-qlR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KgL-CS-6AM"/>
+                    <constraint firstItem="AIq-GW-p3v" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="fiw-OD-YwK"/>
+                    <constraint firstItem="AIq-GW-p3v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rtA-Zw-9CD"/>
+                    <constraint firstItem="p2j-NX-Grp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="44" id="tQD-Np-9KF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="checkButton" destination="p2j-NX-Grp" id="bVP-46-EOQ"/>
+                <outlet property="todoText" destination="fxP-QB-qlR" id="eCy-Hc-gRu"/>
+            </connections>
+            <point key="canvasLocation" x="87" y="-10"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="checkmark.square" catalog="system" width="128" height="114"/>
+        <image name="square" catalog="system" width="128" height="114"/>
+    </resources>
+</document>
