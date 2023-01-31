@@ -95,8 +95,7 @@ class TodoListViewController: UIViewController {
             print("TodoListの取得に失敗しました")
             print(error.localizedDescription)
         }
-        guard let todoList = result else { return }
-        filterdList = todoList.filter("isCheck = \(filter)")
+        filterdList = result?.filter("isCheck = \(filter)")
     }
     
     @objc func addNewObject() {
@@ -107,6 +106,8 @@ class TodoListViewController: UIViewController {
                 let list = TodoList()
                 list.todoList.append(newObject)
                 try delegate.createTodoList(list: list)
+                // 新規の場合、再度取得
+                setupFilterdList(filter: false)
             } else {
                 try delegate.addToList(object: newObject)
             }
