@@ -45,7 +45,7 @@ class TodoListViewController: UIViewController {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var todoListTableView: UITableView!
     
-    var filterdList: Results<TodoObject>?
+    var filterdList: Results<TodoObject>!
     let delegate: TodoListViewControllerDelegate = RealmOperation()
     
     // MARK: - View Life Cycle
@@ -88,7 +88,7 @@ class TodoListViewController: UIViewController {
     /// isCheckからfilterdListを更新する
     /// - Parameter filter: true/false
     private func setupFilterdList(filter: Bool) {
-        var todoList: List<TodoObject>?
+        var todoList: List<TodoObject>!
         do {
             var result: List<TodoObject>?
             try result = delegate.getTodoList()
@@ -99,12 +99,12 @@ class TodoListViewController: UIViewController {
                 try delegate.createTodoList(list: list)
                 try result = delegate.getTodoList()
             }
-            todoList = result
+            todoList = result!
         } catch {
             print("TodoListの取得に失敗しました")
             print(error.localizedDescription)
         }
-        filterdList = todoList?.filter("isCheck = \(filter)")
+        filterdList = todoList.filter("isCheck = \(filter)")
     }
     
     @objc func addNewObject() {
@@ -116,7 +116,6 @@ class TodoListViewController: UIViewController {
             print(error.localizedDescription)
         }
         // 最終行に追加
-        guard let filterdList = filterdList else { return }
         // 動きをつけるため個別でinsert
         todoListTableView.beginUpdates()
         let indexPath = IndexPath(row: filterdList.count - 1, section: 0)
@@ -124,15 +123,13 @@ class TodoListViewController: UIViewController {
         todoListTableView.endUpdates()
         // 最終行にスクロール
         DispatchQueue.main.async { [weak self] in
-            let indexPath = IndexPath(row: filterdList.count - 1, section: 0)
+            let indexPath = IndexPath(row: self!.filterdList.count - 1, section: 0)
             self!.todoListTableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
         
     }
     
     @objc func deletAllObject() {
-        guard let filterdList = filterdList else { return }
-        
         do {
             try delegate.deleteAll(objects: filterdList)
         } catch {
@@ -152,8 +149,6 @@ class TodoListViewController: UIViewController {
     // 削除
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let filterdList = filterdList else { return }
-            
             do {
                 try delegate.delete(object: filterdList[indexPath.row])
             } catch {
@@ -187,14 +182,11 @@ class TodoListViewController: UIViewController {
 
 extension TodoListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let filterdList = filterdList else { return 0}
         return filterdList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = todoListTableView.dequeueReusableCell(withIdentifier: "todoListCell", for: indexPath) as! TodoListTableViewCell
-        guard let filterdList = filterdList else { return cell}
-        
         cell.todoText.text = filterdList[indexPath.row].title
         cell.todoText.isEnabled = !filterdList[indexPath.row].isCheck
         cell.checkButton.isHidden = !filterdList[indexPath.row].isCheck
@@ -244,9 +236,6 @@ extension TodoListViewController: TodoListCellDelegate {
     }
     
     func delete(id: String) {
-        guard let filterdList = filterdList else {
-            return
-        }
         for num in 0..<filterdList.count {
             if filterdList[num].id == id {
                 do {
