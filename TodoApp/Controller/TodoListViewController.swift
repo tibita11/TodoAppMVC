@@ -88,29 +88,29 @@ class TodoListViewController: UIViewController {
     /// isCheckからfilterdListを更新する
     /// - Parameter filter: true/false
     private func setupFilterdList(filter: Bool) {
-        var result: List<TodoObject>?
+        var todoList: List<TodoObject>?
         do {
+            var result: List<TodoObject>?
             try result = delegate.getTodoList()
+            
+            if result == nil {
+                // 初期起動の際でListがnilの場合に新規リストを作成する
+                let list = TodoList()
+                try delegate.createTodoList(list: list)
+                try result = delegate.getTodoList()
+            }
+            todoList = result
         } catch {
             print("TodoListの取得に失敗しました")
             print(error.localizedDescription)
         }
-        filterdList = result?.filter("isCheck = \(filter)")
+        filterdList = todoList?.filter("isCheck = \(filter)")
     }
     
     @objc func addNewObject() {
         let newObject = TodoObject()
         do {
-            let todoList = try delegate.getTodoList()
-            if todoList == nil {
-                let list = TodoList()
-                list.todoList.append(newObject)
-                try delegate.createTodoList(list: list)
-                // 新規の場合、再度取得
-                setupFilterdList(filter: false)
-            } else {
-                try delegate.addToList(object: newObject)
-            }
+            try delegate.addToList(object: newObject)
         } catch {
             print("登録ができませんでした。")
             print(error.localizedDescription)
